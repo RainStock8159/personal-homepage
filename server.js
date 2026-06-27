@@ -36,7 +36,7 @@ http.createServer((req, res) => {
   }
 
   /* ── Static file serving ─────────────────────────────────── */
-  const safePath = path.normalize(parsed.pathname).replace(/^(\.\.[/\\])+/, '');
+  const safePath = parsed.pathname.replace(/\\/g, '/').replace(/^(\.\.\/)+/, '');
   const filePath = path.join(ROOT, safePath === '/' || safePath === '' ? 'index.html' : safePath);
 
   fs.readFile(filePath, (err, data) => {
