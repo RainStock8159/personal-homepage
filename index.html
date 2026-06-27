@@ -1697,7 +1697,7 @@
       <div class="nav-dropdown-menu">
         <button data-tab="ai" id="dd-ai">AI Use Case Ideas</button>
         <button data-tab="events" id="dd-events">Event Calendar</button>
-        <button data-tab="library" id="dd-library">Personal Library</button>
+        <button data-tab="library" id="dd-library">Personal Reference Library</button>
         <button data-tab="directory" id="dd-directory">Private Market Directory</button>
         <button data-tab="ai-examples" id="dd-ai-examples">AI Public Projects</button>
       </div>
@@ -2078,47 +2078,6 @@
     <p class="section-label">AI Ecosystem</p>
     <h2 style="margin-bottom:28px;">AI Public <span class="accent">Projects</span></h2>
 
-    <div class="ai-controls">
-      <div class="ai-filters">
-        <select class="ai-filter-select" id="ex-filter-category">
-          <option value="">All Categories</option>
-          <option>Energy</option>
-          <option>Finance</option>
-          <option>Healthcare</option>
-          <option>Technology</option>
-        </select>
-        <select class="ai-filter-select" id="ex-filter-type">
-          <option value="">All Types</option>
-          <option>Dashboard</option>
-          <option>Guide</option>
-          <option>Map / Visualization</option>
-          <option>Report</option>
-          <option>Resource</option>
-          <option>Tool</option>
-        </select>
-        <button class="ex-starred-toggle" id="ex-filter-starred">★ Starred</button>
-        <button class="filter-clear" id="ex-filter-clear">Clear Filters</button>
-      </div>
-      <div class="view-toggle">
-        <button class="view-btn active" id="ex-view-card" title="Card view">⊞</button>
-        <button class="view-btn" id="ex-view-table" title="Table view">☰</button>
-      </div>
-    </div>
-
-    <div id="ex-card-view"></div>
-    <div id="ex-table-view" style="display:none;">
-      <div class="ai-table-wrap">
-        <table class="ai-table">
-          <thead>
-            <tr>
-              <th>Project</th><th>Category</th><th>Type</th><th>Description</th><th>Creator</th><th>Date</th><th>Source</th>
-            </tr>
-          </thead>
-          <tbody id="ex-table-body"></tbody>
-        </table>
-      </div>
-    </div>
-
     <!-- ── GitHub Trending Feed ── -->
     <div class="gh-feed-section">
       <div class="gh-feed-header">
@@ -2224,7 +2183,7 @@
 <div id="tab-library" class="tab-panel">
   <div class="lib-page">
     <p class="section-label">Curated Resources</p>
-    <h2>Personal Library</h2>
+    <h2>Personal Reference Library</h2>
     <p class="lib-intro">Running collection of articles, videos, tools, and reference documents spanning across technology, finance, business, and personal development.</p>
 
     <div id="lib-featured-wrap" style="display:none;">
@@ -4337,6 +4296,131 @@
   /* ── PERSONAL LIBRARY ───────────────────────────────────────── */
   const LIBRARY_ITEMS = [
     {
+      id: 'us-power-plant-map',
+      title: 'U.S. Power Plant Map',
+      type: 'tool',
+      url: 'https://opengridworks.com/power-plants?bubbleScale=0.65',
+      description: 'Interactive map visualizing all U.S. energy infrastructure by power plant, with bubble scaling to represent generation capacity.',
+      category: 'Energy',
+      tags: ['Energy', 'Map', 'Visualization', 'Infrastructure'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      starred: true,
+      source: 'OpenGridWorks'
+    },
+    {
+      id: 'awesome-prompts',
+      title: 'Awesome Prompts',
+      type: 'reference',
+      url: 'https://github.com/browser-use/awesome-prompts',
+      description: 'A curated collection of effective prompts and templates for browser-use agents, with best practices for crafting prompts that maximize browser automation capabilities.',
+      category: 'AI & Technology',
+      tags: ['AI', 'Prompts', 'Browser Automation', 'LLM'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      source: 'browser-use'
+    },
+    {
+      id: 'trends-checker',
+      title: 'Trends Checker',
+      type: 'tool',
+      url: 'https://github.com/akvise/trends-checker',
+      description: 'A Python CLI tool for Google Trends analysis with enterprise-grade rate limiting, cookie authentication, and multi-backend support to reliably track search trends across Web, YouTube, Images, News, and Shopping.',
+      category: 'AI & Technology',
+      tags: ['Google Trends', 'CLI', 'Python', 'Market Research'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      starred: true,
+      source: 'akvise'
+    },
+    {
+      id: 'claude-howto',
+      title: 'Claude How To',
+      type: 'reference',
+      url: 'https://github.com/luongnv89/claude-howto',
+      description: 'A visual, example-driven guide to Claude Code covering 10 tutorial modules from basic concepts to advanced agents, with copy-paste templates for immediate implementation.',
+      category: 'AI & Technology',
+      tags: ['Claude', 'AI', 'Tutorial', 'Agents'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      starred: true,
+      source: 'luongnv89'
+    },
+    {
+      id: 'claude-financial-services',
+      title: 'Claude for Financial Services',
+      type: 'tool',
+      url: 'https://github.com/anthropics/financial-services-plugins',
+      description: 'A collection of plugins enabling Claude to handle financial services workflows including equity research, financial modeling, deal materials, and portfolio analysis integrated with industry data providers.',
+      category: 'Finance',
+      tags: ['Claude', 'AI', 'Finance', 'Plugins', 'Equity Research'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      source: 'Anthropic'
+    },
+    {
+      id: 'claude-healthcare',
+      title: 'Healthcare Marketplace for Claude',
+      type: 'tool',
+      url: 'https://github.com/anthropics/healthcare',
+      description: 'A marketplace of healthcare-specialized skills and plugins for Claude Code, providing tools for clinical trial protocol generation, prior authorization review, and FHIR API development.',
+      category: 'AI & Technology',
+      tags: ['Claude', 'AI', 'Healthcare', 'Plugins'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      source: 'Anthropic'
+    },
+    {
+      id: 'soar-atlas-satellites',
+      title: 'Soar Atlas — Satellites',
+      type: 'tool',
+      url: 'https://soaratlas.com/satellites',
+      description: 'An interactive satellite imagery explorer powered by Sentinel and NASA Landsat data, letting you view, download, and animate Earth imagery with annotation and timelapse tools.',
+      category: 'AI & Technology',
+      tags: ['Satellite', 'Map', 'Visualization', 'NASA'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      starred: true,
+      source: 'Soar Atlas'
+    },
+    {
+      id: 'scientific-discovery-ai-map',
+      title: 'Scientific Discovery AI Map',
+      type: 'tool',
+      url: 'https://app.topology.vc/scientific-ai-map',
+      description: 'An interactive map visualizing the landscape of AI in scientific discovery, tracking $22B+ in capital deployment across foundation models, application domains, and infrastructure.',
+      category: 'AI & Technology',
+      tags: ['AI', 'Map', 'Visualization', 'Science', 'Capital'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      source: 'Topology Research'
+    },
+    {
+      id: 'wells-intelligence',
+      title: 'Wells Intelligence',
+      type: 'tool',
+      url: 'https://wells.clearforkintelligence.com/',
+      description: 'A web application providing mapping, production data analysis, and alert monitoring for oil and gas wells across Texas.',
+      category: 'Energy',
+      tags: ['Energy', 'Oil & Gas', 'Map', 'Dashboard', 'Texas'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      starred: true,
+      source: 'Clearfork Intelligence'
+    },
+    {
+      id: 'arnis',
+      title: 'Arnis',
+      type: 'tool',
+      url: 'https://arnismc.com/',
+      description: 'A free, open-source desktop app that converts real-world geographic locations into playable Minecraft Java and Bedrock worlds using OpenStreetMap and elevation datasets.',
+      category: 'AI & Technology',
+      tags: ['OpenStreetMap', 'Minecraft', 'GIS', 'Tool'],
+      dateAdded: '2026-04-05',
+      featured: false,
+      source: 'Louis Erbkamm'
+    },
+    {
       id: 'axial',
       title: 'Axial',
       type: 'tool',
@@ -5267,243 +5351,6 @@
     return `${months[m - 1]} ${d}, ${y}`;
   }
 
-  const EX_PROJECTS = [
-    {
-      title: 'U.S. Power Plant Map',
-      category: 'Energy',
-      type: 'Map / Visualization',
-      description: 'Interactive map visualizing all U.S. energy infrastructure by power plant, with bubble scaling to represent generation capacity.',
-      creator: 'OpenGridWorks',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://opengridworks.com/power-plants?bubbleScale=0.65',
-      image: 'https://opengridworks.com/logo-dark.webp',
-      starred: true
-    },
-    {
-      title: 'Awesome Prompts',
-      category: 'Technology',
-      type: 'Resource',
-      description: 'A curated collection of effective prompts and templates for browser-use agents, with best practices for crafting prompts that maximize browser automation capabilities.',
-      creator: 'browser-use',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://github.com/browser-use/awesome-prompts'
-    },
-    {
-      title: 'Trends Checker',
-      category: 'Technology',
-      type: 'Tool',
-      description: 'A Python CLI tool for Google Trends analysis with enterprise-grade rate limiting, cookie authentication, and multi-backend support to reliably track search trends across Web, YouTube, Images, News, and Shopping.',
-      creator: 'akvise',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://github.com/akvise/trends-checker',
-      starred: true
-    },
-    {
-      title: 'Claude How To',
-      category: 'Technology',
-      type: 'Guide',
-      description: 'A visual, example-driven guide to Claude Code covering 10 tutorial modules from basic concepts to advanced agents, with copy-paste templates for immediate implementation.',
-      creator: 'luongnv89',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://github.com/luongnv89/claude-howto',
-      starred: true
-    },
-    {
-      title: 'Claude for Financial Services',
-      category: 'Finance',
-      type: 'Tool',
-      description: 'A collection of plugins enabling Claude to handle financial services workflows including equity research, financial modeling, deal materials, and portfolio analysis integrated with industry data providers.',
-      creator: 'Anthropic',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://github.com/anthropics/financial-services-plugins'
-    },
-    {
-      title: 'Healthcare Marketplace for Claude',
-      category: 'Healthcare',
-      type: 'Tool',
-      description: 'A marketplace of healthcare-specialized skills and plugins for Claude Code, providing tools for clinical trial protocol generation, prior authorization review, and FHIR API development.',
-      creator: 'Anthropic',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://github.com/anthropics/healthcare'
-    },
-    {
-      title: 'Soar Atlas — Satellites',
-      category: 'Technology',
-      type: 'Map / Visualization',
-      description: 'An interactive satellite imagery explorer powered by Sentinel and NASA Landsat data, letting you view, download, and animate Earth imagery with annotation and timelapse tools.',
-      creator: 'Soar Atlas',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://soaratlas.com/satellites',
-      starred: true
-    },
-    {
-      title: 'Scientific Discovery AI Map',
-      category: 'Technology',
-      type: 'Map / Visualization',
-      description: 'An interactive map visualizing the landscape of AI in scientific discovery, tracking $22B+ in capital deployment across foundation models, application domains, and infrastructure.',
-      creator: 'Topology Research',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://app.topology.vc/scientific-ai-map'
-    },
-    {
-      title: 'Wells Intelligence',
-      category: 'Energy',
-      type: 'Dashboard',
-      description: 'A web application providing mapping, production data analysis, and alert monitoring for oil and gas wells across Texas.',
-      creator: 'Clearfork Intelligence',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://wells.clearforkintelligence.com/',
-      starred: true
-    },
-    {
-      title: 'Arnis',
-      category: 'Technology',
-      type: 'Tool',
-      description: 'A free, open-source desktop app that converts real-world geographic locations into playable Minecraft Java and Bedrock worlds using OpenStreetMap and elevation datasets.',
-      creator: 'Louis Erbkamm',
-      dateAdded: '2026-04-05',
-      sourceUrl: 'https://arnismc.com/'
-    }
-  ];
-
-  function exRenderCards(data) {
-    const el = document.getElementById('ex-card-view');
-    if (!data.length) { el.innerHTML = '<p class="ai-empty">No projects match your filters.</p>'; return; }
-    el.innerHTML = `<div class="ai-card-grid">${data.map(d => `
-      <div class="ai-card">
-        <div class="ex-card-preview">
-          <img src="${d.image || `https://api.microlink.io/?url=${encodeURIComponent(d.sourceUrl)}&screenshot=true&meta=false&embed=screenshot.url`}" alt="${d.title} preview" loading="lazy" />
-        </div>
-        <div class="ai-card-title">${d.title}</div>
-        <div class="ai-card-meta">
-          <span class="cat-badge">${d.category}</span>
-          <span class="ex-type-badge">${d.type}</span>
-        </div>
-        <div class="ai-card-desc">${d.description}</div>
-        <div class="ai-card-footer">
-          <div class="ai-card-tools-label">Creator: ${d.creator} &nbsp;·&nbsp; Added: ${formatExDate(d.dateAdded)}</div>
-          <a class="ex-view-project-btn" href="${d.sourceUrl}" target="_blank" rel="noopener noreferrer">View Project →</a>
-        </div>
-      </div>`).join('')}</div>`;
-  }
-
-  function exRenderTable(data) {
-    const tbody = document.getElementById('ex-table-body');
-    if (!data.length) { tbody.innerHTML = '<tr><td colspan="7" class="ai-empty">No projects match your filters.</td></tr>'; return; }
-    tbody.innerHTML = data.map(d => `
-      <tr>
-        <td><strong>${d.title}</strong></td>
-        <td><span class="cat-badge">${d.category}</span></td>
-        <td><span class="ex-type-badge">${d.type}</span></td>
-        <td>${d.description}</td>
-        <td>${d.creator}</td>
-        <td>${formatExDate(d.dateAdded)}</td>
-        <td><a class="ex-view-project-btn" href="${d.sourceUrl}" target="_blank" rel="noopener noreferrer">View →</a></td>
-      </tr>`).join('');
-  }
-
-  let exStarredOnly = false;
-
-  function exApplyFilters() {
-    const cat  = document.getElementById('ex-filter-category').value;
-    const type = document.getElementById('ex-filter-type').value;
-    const filtered = EX_PROJECTS.filter(d =>
-      (!cat  || d.category === cat) &&
-      (!type || d.type === type) &&
-      (!exStarredOnly || d.starred)
-    );
-    exRenderCards(filtered);
-    exRenderTable(filtered);
-  }
-
-  document.getElementById('ex-filter-starred').addEventListener('click', () => {
-    exStarredOnly = !exStarredOnly;
-    document.getElementById('ex-filter-starred').classList.toggle('active', exStarredOnly);
-    exApplyFilters();
-  });
-
-  /* View toggle */
-  document.getElementById('ex-view-card').addEventListener('click', () => {
-    document.getElementById('ex-card-view').style.display = '';
-    document.getElementById('ex-table-view').style.display = 'none';
-    document.getElementById('ex-view-card').classList.add('active');
-    document.getElementById('ex-view-table').classList.remove('active');
-  });
-  document.getElementById('ex-view-table').addEventListener('click', () => {
-    document.getElementById('ex-card-view').style.display = 'none';
-    document.getElementById('ex-table-view').style.display = '';
-    document.getElementById('ex-view-card').classList.remove('active');
-    document.getElementById('ex-view-table').classList.add('active');
-  });
-
-  /* Filter listeners */
-  ['ex-filter-category', 'ex-filter-type'].forEach(id =>
-    document.getElementById(id).addEventListener('change', exApplyFilters)
-  );
-  document.getElementById('ex-filter-clear').addEventListener('click', () => {
-    ['ex-filter-category', 'ex-filter-type'].forEach(id =>
-      document.getElementById(id).value = ''
-    );
-    exStarredOnly = false;
-    document.getElementById('ex-filter-starred').classList.remove('active');
-    exApplyFilters();
-  });
-
-  function renderHomeExamples() {
-    const el = document.getElementById('home-ex-preview');
-    if (!el) return;
-
-    const newest = EX_PROJECTS.filter(d => d.starred);
-
-    el.innerHTML = `
-      <div class="home-carousel">
-        <button class="home-carousel-arrow" id="home-car-prev">&#8592;</button>
-        <div class="home-carousel-track-wrap">
-          <div class="home-carousel-track" id="home-car-track">
-            ${newest.map(d => `
-              <div class="ai-card">
-                <div class="ex-card-preview">
-                  <img src="${d.image || `https://api.microlink.io/?url=${encodeURIComponent(d.sourceUrl)}&screenshot=true&meta=false&embed=screenshot.url`}" alt="${d.title} preview" loading="lazy" />
-                </div>
-                <div class="ai-card-title">${d.title}</div>
-                <div class="ai-card-meta">
-                  <span class="cat-badge">${d.category}</span>
-                  <span class="ex-type-badge">${d.type}</span>
-                </div>
-                <div class="ai-card-desc">${d.description}</div>
-                <div class="ai-card-footer">
-                  <div class="ai-card-tools-label">Creator: ${d.creator} &nbsp;·&nbsp; Added: ${formatExDate(d.dateAdded)}</div>
-                  <a class="ex-view-project-btn" href="${d.sourceUrl}" target="_blank" rel="noopener noreferrer">View Project →</a>
-                </div>
-              </div>`).join('')}
-          </div>
-        </div>
-        <button class="home-carousel-arrow" id="home-car-next">&#8594;</button>
-      </div>
-      <div class="home-carousel-dots" id="home-car-dots">
-        ${newest.map((_, i) => `<button class="home-carousel-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></button>`).join('')}
-      </div>`;
-
-    let current = 0;
-    const total   = newest.length;
-    const track   = document.getElementById('home-car-track');
-    const prevBtn = document.getElementById('home-car-prev');
-    const nextBtn = document.getElementById('home-car-next');
-    const dots    = document.querySelectorAll('#home-car-dots .home-carousel-dot');
-
-    function goTo(idx) {
-      current = ((idx % total) + total) % total;
-      track.style.transform = `translateX(-${current * 100}%)`;
-      dots.forEach((d, i) => d.classList.toggle('active', i === current));
-    }
-
-    prevBtn.addEventListener('click', () => goTo(current - 1));
-    nextBtn.addEventListener('click', () => goTo(current + 1));
-    dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.idx)));
-
-    goTo(0);
-  }
-
   /* ── MY PROJECTS CAROUSEL ──────────────────── */
   const MY_PROJECTS = [
     {
@@ -5581,9 +5428,6 @@
   }
 
   /* Initial render */
-  exRenderCards(EX_PROJECTS);
-  exRenderTable(EX_PROJECTS);
-  renderHomeExamples();
   renderHomeProjects();
 
   /* ── GITHUB TRENDING FEED (Supabase) ──────────── */
