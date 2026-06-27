@@ -1534,6 +1534,111 @@
       color: var(--gray);
     }
 
+    /* ── GITHUB TRENDING FEED ───────────────────── */
+    .gh-feed-section {
+      margin-top: 56px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 40px;
+    }
+    .gh-feed-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .gh-feed-title { color: var(--white); font-size: 1.4rem; margin: 0 0 4px; }
+    .gh-feed-title .accent { color: rgba(255,255,255,0.6); }
+    .gh-feed-subtitle { font-family: 'Arial', sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); margin: 0; }
+    .gh-feed-meta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .gh-feed-count { font-family: 'Arial', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.4); white-space: nowrap; }
+    .gh-feed-list { display: flex; flex-direction: column; gap: 0; }
+    .gh-feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .gh-feed-item:hover { background: rgba(255,255,255,0.03); border-radius: 6px; padding-left: 10px; padding-right: 10px; margin: 0 -10px; }
+    .gh-feed-date-col {
+      flex-shrink: 0;
+      width: 80px;
+      text-align: right;
+      padding-top: 2px;
+    }
+    .gh-feed-date {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+    }
+    .gh-feed-body { flex: 1; min-width: 0; }
+    .gh-feed-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gh-feed-desc {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .gh-feed-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .gh-badge {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.6);
+    }
+    .gh-badge-stars {
+      background: rgba(255,210,80,0.12);
+      color: rgba(255,210,80,0.85);
+    }
+    .gh-badge-lang {
+      background: rgba(80,180,255,0.1);
+      color: rgba(80,180,255,0.8);
+    }
+    .gh-feed-link-col {
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .gh-feed-link {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .gh-feed-link:hover { color: var(--white); }
+    .gh-feed-status {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+      padding: 24px 0;
+      text-align: center;
+    }
+    .gh-feed-status.error { color: rgba(255,120,100,0.7); }
+
     /* ── NEWS CARD TAGS ──────────────────────────── */
     .news-card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
     .n-tag {
@@ -2012,6 +2117,24 @@
           <tbody id="ex-table-body"></tbody>
         </table>
       </div>
+    </div>
+
+    <!-- ── GitHub Trending Feed ── -->
+    <div class="gh-feed-section">
+      <div class="gh-feed-header">
+        <div>
+          <h3 class="gh-feed-title">GitHub <span class="accent">Trending</span></h3>
+          <p class="gh-feed-subtitle">AI &amp; finance repos synced daily · sorted by most recently pushed</p>
+        </div>
+        <div class="gh-feed-meta-row">
+          <select class="ai-filter-select" id="gh-filter-category">
+            <option value="">All Categories</option>
+          </select>
+          <span class="gh-feed-count" id="gh-feed-count"></span>
+        </div>
+      </div>
+      <div id="gh-feed-list"></div>
+      <div id="gh-feed-status" class="gh-feed-status">Loading trending repos…</div>
     </div>
   </div>
 </div>
@@ -5462,6 +5585,108 @@
   exRenderTable(EX_PROJECTS);
   renderHomeExamples();
   renderHomeProjects();
+
+  /* ── GITHUB TRENDING FEED (Supabase) ──────────── */
+  const SB_URL  = 'https://oiyoojrnfjglbxxwinfh.supabase.co';
+  const SB_ANON = 'sb_publishable_K8cgUf-u9JJi_Xms-MYN6g_NPtPHH1_';
+
+  let ghAllRows  = [];
+  let ghCategory = '';
+
+  function ghFormatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function ghRender(rows) {
+    const list   = document.getElementById('gh-feed-list');
+    const status = document.getElementById('gh-feed-status');
+    if (!rows.length) {
+      list.innerHTML = '';
+      status.textContent = 'No repos match the selected filter.';
+      status.style.display = '';
+      return;
+    }
+    status.style.display = 'none';
+    list.innerHTML = rows.map(r => `
+      <a class="gh-feed-item" href="${r.source}" target="_blank" rel="noopener noreferrer">
+        <div class="gh-feed-date-col">
+          <div class="gh-feed-date">${ghFormatDate(r.date)}</div>
+        </div>
+        <div class="gh-feed-body">
+          <div class="gh-feed-name">${r.project}</div>
+          ${r.description ? `<div class="gh-feed-desc">${r.description}</div>` : ''}
+          <div class="gh-feed-badges">
+            <span class="gh-badge">${r.category}</span>
+            <span class="gh-badge">${r.type}</span>
+            ${r.language ? `<span class="gh-badge gh-badge-lang">${r.language}</span>` : ''}
+            <span class="gh-badge gh-badge-stars">★ ${(r.stars || 0).toLocaleString()}</span>
+          </div>
+        </div>
+        <div class="gh-feed-link-col">
+          <span class="gh-feed-link">GitHub →</span>
+        </div>
+      </a>`).join('');
+  }
+
+  function ghApplyFilter() {
+    const filtered = ghCategory
+      ? ghAllRows.filter(r => r.category === ghCategory)
+      : ghAllRows;
+    document.getElementById('gh-feed-count').textContent = `${filtered.length} repos`;
+    ghRender(filtered);
+  }
+
+  document.getElementById('gh-filter-category').addEventListener('change', function() {
+    ghCategory = this.value;
+    ghApplyFilter();
+  });
+
+  async function ghFetchFeed() {
+    const status = document.getElementById('gh-feed-status');
+    try {
+      const res = await fetch(
+        `${SB_URL}/rest/v1/ai_public_projects?select=project,category,type,description,creator,date,source,stars,language&order=date.desc,stars.desc&limit=100`,
+        { headers: { apikey: SB_ANON, Authorization: `Bearer ${SB_ANON}` } }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      ghAllRows = await res.json();
+
+      // Populate category filter from live data
+      const cats = [...new Set(ghAllRows.map(r => r.category).filter(Boolean))].sort();
+      const sel  = document.getElementById('gh-filter-category');
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = opt.textContent = c;
+        sel.appendChild(opt);
+      });
+
+      ghApplyFilter();
+    } catch (e) {
+      status.textContent = 'Could not load trending repos. ' + e.message;
+      status.classList.add('error');
+    }
+  }
+
+  // Fetch on first open of the tab; hook switchTab so navigating to it also triggers
+  let ghFeedLoaded = false;
+  function maybeLoadGhFeed() {
+    if (ghFeedLoaded) return;
+    ghFeedLoaded = true;
+    ghFetchFeed();
+  }
+  const _origSwitchTab = typeof switchTab === 'function' ? switchTab : null;
+  if (_origSwitchTab) {
+    window.switchTab = function(tab) {
+      _origSwitchTab(tab);
+      if (tab === 'ai-examples') maybeLoadGhFeed();
+    };
+  }
+  // Also load immediately if the tab happens to be active on page load
+  if (document.getElementById('tab-ai-examples').classList.contains('active')) {
+    maybeLoadGhFeed();
+  }
 
   /* ── DIRECTORY MAP ────────────────────────── */
   const CITY_COORDS = {
